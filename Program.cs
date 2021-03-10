@@ -72,7 +72,7 @@ namespace VotingSystem
             while (totalSeatscount != seatsCount)
 
             {
-                Party biggestVotes = partys.Aggregate((v1, v2) => v1.NewVotes > v2.NewVotes ? v1 : v2);
+                Party biggestVotes = partys.Aggregate((v1, v2) => v1.GetNewVotes() > v2.GetNewVotes() ? v1 : v2);
                 biggestVotes.Seats += 1;
                 biggestVotes.DivideParty();
 
@@ -97,7 +97,7 @@ class Party
         {
             public string Name { get; private set; }
             public int Votes { get; private set; }
-            public int NewVotes { get; private set; }
+            private int NewVotes;
             public int Seats { get; set; }
 
 
@@ -108,6 +108,10 @@ class Party
                 NewVotes = Votes;
             }
 
+            public int GetNewVotes() {
+                return NewVotes;
+            }
+    
             public double PercentOfVotes(double totalVotes) => (Votes / totalVotes) * 100;
 
             public override string ToString()
